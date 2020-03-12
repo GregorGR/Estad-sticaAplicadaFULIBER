@@ -31,14 +31,6 @@ dist_estimada(-17.5791, 3.9324, 1)
 
 #Ejercicio TALLER#1 (REGRESI”N LINEAL)
 
-###Funci√≥n diagrama de dispersi√≥n regresi√≥n lineal simple (revisar formula)
-RLsimple <- function(datos, XX, YY) {
-    Xi <- select(datos, XX) 
-    Yi <- select(datos, YY)
-    ggplot(datos, aes(x = Xi, y = Yi)) + 
-    geom_point() + 
-    geom_smooth(method = lm, se=TRUE) 
-}
 
 ###instalaciÛn de paquetes. 
 install.packages('ggplot2')
