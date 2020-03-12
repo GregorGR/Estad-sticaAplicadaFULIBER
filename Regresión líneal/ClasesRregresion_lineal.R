@@ -2,6 +2,13 @@ install.packages('ggplot2')
 library(ggplot2)
 install.packages('dplyr')
 library(dplyr)
+install.packages('downloader')
+library(downloader) 
+url <- "https://github.com/GregorGR/Estad-sticaAplicadaFULIBER/blob/master/Regresi%C3%B3n%20l%C3%ADneal/geiser.csv"
+geiserfile <- "geiser.csv" 
+download(url, destfile=geiserfile)
+
+###Ejercicio en clase regresi髇 linela simple
 data(cars)
 head(cars)
 View(cars)
@@ -28,6 +35,8 @@ dist_estimada(-17.5791, 3.9324, 1)
 
 #Interpretaci贸n de los parametros estimados (betas estimados)
 
+#Ejercicio TALLER#1 (REGRESI覰 LINEAL)
+
 ###Funci贸n diagrama de dispersi贸n regresi贸n lineal simple (revisar formula)
 RLsimple <- function(datos, XX, YY) {
     Xi <- select(datos, XX) 
@@ -37,11 +46,23 @@ RLsimple <- function(datos, XX, YY) {
     geom_smooth(method = lm, se=TRUE) 
 }
 
+###instalaci髇 de paquetes. 
+install.packages('ggplot2')
+library(ggplot2)
+install.packages('dplyr')
+library(dplyr)
+install.packages('downloader')
+library(downloader) 
+url <- "https://raw.githubusercontent.com/GregorGR/Estad-sticaAplicadaFULIBER/master/Regresi%C3%B3n%20l%C3%ADneal/geiser.csv?token=AKYIPMGUWRQXJATZZDK3MOC6NKS2Q"
+geiserfile <- "geiser.csv" 
+
 geiserdat <- read.csv('geiser.csv')
 class(geiserdat)
 head(geiserdat)
 View(geiserdat)
+summary(geiserdat)
 
+###Plot regresi髇 lineal
 ggplot(geiserdat, aes(x=waiting, y=eruptions)) + 
     geom_point() + 
     geom_smooth(method = lm, se=TRUE) 
