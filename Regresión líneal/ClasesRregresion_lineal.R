@@ -1,12 +1,6 @@
+###Clase regresión lineal 
 install.packages('ggplot2')
 library(ggplot2)
-install.packages('dplyr')
-library(dplyr)
-install.packages('downloader')
-library(downloader) 
-url <- "https://github.com/GregorGR/Estad-sticaAplicadaFULIBER/blob/master/Regresi%C3%B3n%20l%C3%ADneal/geiser.csv"
-geiserfile <- "geiser.csv" 
-download(url, destfile=geiserfile)
 
 ###Ejercicio en clase regresión linela simple
 data(cars)
