@@ -35,6 +35,8 @@ dist_estimada(-17.5791, 3.9324, 1)
 ###instalación de paquetes. 
 install.packages('ggplot2')
 library(ggplot2)
+install.packages('ggthemes')
+library(ggthemes)
 install.packages('dplyr')
 library(dplyr)
 install.packages('downloader')
@@ -56,4 +58,24 @@ ggplot(geiserdat, aes(x=waiting, y=eruptions)) +
 ##Modelo de taller1
 Modelotaller1 = lm(waiting~eruptions, data=geiserdat)
 summary(Modelotaller1)
+
+###Función para Graficar y para sacar modelo
+RLsimple_f <- function(datos, xi, yi) {
+    p <- ggplot(datos, aes(x = get(xi),
+                        y = get(yi)))
+    Graphp <- p + 
+        geom_point() + 
+        geom_smooth(method = lm, se = TRUE, color = "blue") +
+        ggtitle(paste0("Gráfica regresión lineal simple: ", 
+                                       xi, "|", yi, sep = "")) +
+        labs(x = xi, y = yi) +
+        theme_economist(dkpanel = TRUE) +
+        scale_colour_economist()
+    
+    Model <- lm(get(yi) ~ get(xi), data=datos)
+    print(summary(Model))
+    print(Graphp)
+}
+
+RLsimple_f(geiserdat, 'eruptions', 'waiting')
 
