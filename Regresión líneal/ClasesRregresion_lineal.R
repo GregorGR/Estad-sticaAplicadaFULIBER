@@ -40,7 +40,8 @@ library(ggthemes)
 install.packages('dplyr')
 library(dplyr)
 install.packages('downloader')
-library(downloader) 
+library(downloader)
+
 url <- "https://raw.githubusercontent.com/GregorGR/Estad-sticaAplicadaFULIBER/master/Regresi%C3%B3n%20l%C3%ADneal/geiser.csv?token=AKYIPMGUWRQXJATZZDK3MOC6NKS2Q"
 geiserfile <- "geiser.csv" 
 
@@ -61,21 +62,50 @@ summary(Modelotaller1)
 
 ###Función para Graficar y para sacar modelo
 RLsimple_f <- function(datos, xi, yi) {
+    require(ggplot2)
+    require(ggthemes)
     p <- ggplot(datos, aes(x = get(xi),
                         y = get(yi)))
+    Model <- lm(get(yi) ~ get(xi), data=datos)
     Graphp <- p + 
         geom_point() + 
-        geom_smooth(method = lm, se = TRUE, color = "blue") +
-        ggtitle(paste0("Gráfica regresión lineal simple: ", 
-                                       xi, "|", yi, sep = "")) +
-        labs(x = xi, y = yi) +
-        theme_economist(dkpanel = TRUE) +
+        geom_smooth(method = lm, se = TRUE, color = "darkred") +
+        theme_economist(base_size = 10, base_family = "sans", dkpanel = TRUE) +
         scale_colour_economist()
-    
-    Model <- lm(get(yi) ~ get(xi), data=datos)
-    print(summary(Model))
-    print(Graphp)
+        
+    Graphp2 <- Graphp + labs(x = xi, y = yi,
+             title = paste('Gráfica regresión lineal simple: ', 
+                            xi, ' | ', yi, sep = ''),
+             caption = paste('Intercepto =',signif(Model$coef[[1]],5), 
+                                             '; Pendiente =',signif(Model$coef[[2]], 5),
+                                             '; Adj R2 = ',signif(summary(Model)$adj.r.squared, 5),
+                                             '; p =',signif(summary(Model)$coef[2,4], 5))) +
+        theme(
+            plot.title = element_text(size = 16, 
+                                      face = "bold", 
+                                      hjust = 0.5, 
+                                      vjust=2.5),
+            plot.caption = element_text(face = "italic", 
+                                        size = 10, 
+                                        hjust = 0.98, 
+                                        vjust=-2.5),
+            axis.ticks.length = unit(.15, "cm"),
+            axis.ticks.y = element_blank(),
+            axis.title.x = element_text(color = "black", 
+                                        size = 10,
+                                        face = "bold",
+                                        vjust = -1),
+            axis.title.y = element_text(color = "black",
+                                        size = 10,
+                                        face = "bold",
+                                        vjust = 3)
+        )
+        #geom_rug() + geom_density_2d() +
+    modelsumm <- (summary(Model))    
+    print(modelsumm)
+    print(modelsumm$coef)
+    print(Graphp2)
 }
 
-RLsimple_f(geiserdat, 'eruptions', 'waiting')
+RLsimple_f(geiserdat, 'waiting', 'eruptions')
 
